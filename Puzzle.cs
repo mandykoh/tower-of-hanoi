@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 
@@ -30,6 +31,27 @@ namespace TowerOfHanoi
         {
             var disk = Towers[from].TakeDisk();
             Towers[to].AddDisk(disk);
+        }
+        
+        
+        public void MoveDisks(int count, int from, int to, Action eachMove = null)
+        {
+            int freeTower;
+            for (freeTower = 0; freeTower == from || freeTower == to; ++freeTower);
+            
+            if (count > 1) {
+                MoveDisks(count: count - 1, from: from, to: freeTower, eachMove: eachMove);
+            }
+            
+            MoveDisk(from: from, to: to);
+            
+            if (eachMove != null) {
+                eachMove();
+            }
+            
+            if (count > 1) {
+                MoveDisks(count: count - 1, from: freeTower, to: to, eachMove: eachMove);
+            }
         }
         
         
