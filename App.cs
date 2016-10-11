@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 
 
 namespace TowerOfHanoi
@@ -14,7 +13,7 @@ namespace TowerOfHanoi
 
             puzzle.MoveDisks(count: 4, from: 0, to: 2, eachMove: () => {
                 Console.Out.WriteLine();
-                puzzle.Print(Console.Out);                
+                puzzle.Print(Console.Out);
             });
         }
     }
