@@ -39,16 +39,19 @@ namespace TowerOfHanoi
             int freeTower;
             for (freeTower = 0; freeTower == from || freeTower == to; ++freeTower);
             
+            // Move all disks above us to the free tower
             if (count > 1) {
                 MoveDisks(count: count - 1, from: from, to: freeTower, eachMove: eachMove);
             }
             
+            // Move us to the destination tower
             MoveDisk(from: from, to: to);
             
             if (eachMove != null) {
                 eachMove();
             }
             
+            // Move all the disks we moved to the free tower back on top of us
             if (count > 1) {
                 MoveDisks(count: count - 1, from: freeTower, to: to, eachMove: eachMove);
             }
