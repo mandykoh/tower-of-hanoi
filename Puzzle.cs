@@ -6,14 +6,14 @@ namespace TowerOfHanoi
 {
     public class Puzzle
     {
-        int diskCount;
-        
-        public Tower[] Towers { get; }
+        readonly int _diskCount;
+
+        Tower[] Towers { get; }
         
         
         public Puzzle(int towerCount, int diskCount)
         {
-            this.diskCount = diskCount;
+            _diskCount = diskCount;
             
             Towers = new Tower[towerCount];
             
@@ -37,8 +37,8 @@ namespace TowerOfHanoi
         public void MoveDisks(int count, int from, int to, Action eachMove = null)
         {
             int freeTower;
-            for (freeTower = 0; freeTower == from || freeTower == to; ++freeTower);
-            
+            for (freeTower = 0; freeTower == from || freeTower == to; ++freeTower) {}
+
             // Move all disks above us to the free tower
             if (count > 1) {
                 MoveDisks(count: count - 1, from: from, to: freeTower, eachMove: eachMove);
@@ -46,11 +46,9 @@ namespace TowerOfHanoi
             
             // Move us to the destination tower
             MoveDisk(from: from, to: to);
-            
-            if (eachMove != null) {
-                eachMove();
-            }
-            
+
+            eachMove?.Invoke();
+
             // Move all the disks we moved to the free tower back on top of us
             if (count > 1) {
                 MoveDisks(count: count - 1, from: freeTower, to: to, eachMove: eachMove);
@@ -60,7 +58,7 @@ namespace TowerOfHanoi
         
         public void Print(TextWriter writer)
         {
-            var baseRadius = diskCount + 1;
+            var baseRadius = _diskCount + 1;
             
             // Show first row (containing only the tips of spokes)
             for (var i = 0; i < Towers.Length; ++i) {
@@ -71,7 +69,7 @@ namespace TowerOfHanoi
             writer.WriteLine();
             
             // Show the disks
-            for (var diskRow = diskCount; diskRow > 0; --diskRow) {
+            for (var diskRow = _diskCount; diskRow > 0; --diskRow) {
                 foreach (var tower in Towers) {
                     
                     // No disk at this row - show a spoke
